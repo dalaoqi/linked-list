@@ -24,10 +24,10 @@ int main(int argc, char const *argv[])
 
     print_list(head);
 
-    head = swap_pair(head);
+    swap_pair(&head);
     print_list(head);
 
-    head = reverse(head);
+    reverse(&head);
     print_list(head);
 
     return 0;

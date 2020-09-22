@@ -35,26 +35,47 @@ void remove_entry(node_t **head, node_t *entry)
     free(entry);
 }
 
-node_t *swap_pair(node_t *head)
+void *swap_pair(node_t **head)
 {
-    for (node_t **node = &head; *node && (*node)->next; node = &(*node)->next->next) {
+    for (node_t **node = head; *node && (*node)->next; node = &(*node)->next->next) {
         node_t *tmp = *node;
         *node = (*node)->next;
         tmp->next = (*node)->next;
         (*node)->next = tmp;
     }
-    return head;
 }
-
-node_t *reverse(node_t *head)
+/*
+void *reverse(node_t **head)
 {
     node_t *cursor = NULL;
-    while (head) {
-        node_t *next = head->next;
-        head->next = cursor; cursor = head;
-        head = next;
+    while (*head) {
+        node_t *next = (*head)->next;
+        (*head)->next = cursor; cursor = *head;
+        *head = next;
     }
-    return cursor;
+    *head = cursor;
+}
+*/
+
+void reverse(node_t **head)
+{
+    rev_recurive(*head,  head);
+}
+
+void rev_recurive(node_t *head, node_t **headRef)
+{
+    if (head == NULL) {
+        return;
+    } 
+    node_t *first = head;
+    node_t *rest = head->next;
+    if (rest == NULL) {
+        *headRef = first;
+        return;
+    }
+    rev_recurive(rest, headRef);
+    rest->next = first;
+    first->next = NULL;
 }
 
 void print_list(node_t *head)
