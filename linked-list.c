@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include"linked-list.h"
 #include<assert.h>
 void add_entry(node_t **head, int new_value)
@@ -83,4 +84,33 @@ void print_list(node_t *head)
     for (node_t *current = head; current; current = current->next)
         printf("%d ", current->value);
     printf("\n");
+}
+
+void shuffle(node_t **head)
+{
+    int len = 0;
+    srand(time(NULL));
+    node_t **cursor = head;
+    while(*cursor) {
+        len++;
+        cursor = &(*cursor)->next;
+    }
+    node_t *first = NULL;
+    for (int i = len; i > 0; i--) {
+        int random = rand() % i;
+        cursor = head;
+        while (random--) {
+            cursor = &(*cursor)->next;
+        }
+        node_t *new_node = *cursor;
+        *cursor = (*cursor)->next;
+        new_node->next = NULL;
+        if (first) {
+            new_node->next = first;
+            first = new_node;
+        } else {
+            first = new_node;
+        }
+    }
+    *head = first;
 }

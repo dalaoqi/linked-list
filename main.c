@@ -29,6 +29,7 @@ int main(int argc, char const *argv[])
 
     reverse(&head);
     print_list(head);
-
+    shuffle(&head);
+    print_list(head);
     return 0;
 }
